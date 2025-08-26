@@ -1,0 +1,47 @@
+name: flutter_dev_tools
+description: All-in-One Developer Tools - Flutter Web Application
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # UI & Animations
+  cupertino_icons: ^1.0.2
+  google_fonts: ^6.1.0
+  flutter_animate: ^4.2.0+1
+  
+  # Utilities
+  crypto: ^3.0.3
+  uuid: ^4.1.0
+  qr_flutter: ^4.1.0
+  csv: ^5.0.2
+  markdown: ^7.1.1
+  flutter_markdown: ^0.6.18
+  url_launcher: ^6.2.1
+  
+  # State Management
+  provider: ^6.1.1
+  
+  # HTTP & File handling
+  http: ^1.1.0
+  file_picker: ^6.1.1
+  
+  # Color utilities
+  flutter_colorpicker: ^1.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/

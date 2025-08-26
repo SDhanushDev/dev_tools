@@ -1,0 +1,45 @@
+name: Deploy Flutter Web to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Enable web
+      run: flutter config --enable-web
+      
+    - name: Build web with environment variables
+      run: |
+        flutter build web --release \
+          --base-href "/dev_tools/" \
+          --dart-define=ENVIRONMENT=production \
+          --dart-define=GOOGLE_ADSENSE_CLIENT_ID="${{ secrets.GOOGLE_ADSENSE_CLIENT_ID }}" \
+          --dart-define=GOOGLE_ADSENSE_SLOT_ID_BANNER="${{ secrets.GOOGLE_ADSENSE_SLOT_ID_BANNER }}" \
+          --dart-define=GOOGLE_ADSENSE_SLOT_ID_SIDEBAR="${{ secrets.GOOGLE_ADSENSE_SLOT_ID_SIDEBAR }}" \
+          --dart-define=GOOGLE_ANALYTICS_ID="${{ secrets.GOOGLE_ANALYTICS_ID }}" \
+          --dart-define=PRODUCTION_URL="https://${{ github.repository_owner }}.github.io/dev_tools/"
+      
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/web
