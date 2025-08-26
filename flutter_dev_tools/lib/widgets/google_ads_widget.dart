@@ -74,93 +74,126 @@ class _GoogleAdsWidgetState extends State<GoogleAdsWidget> {
   Widget _buildAdContainer() {
     final theme = Theme.of(context);
     
-    return Container(
-      width: widget.width ?? _getDefaultWidth(),
-      height: widget.height ?? _getDefaultHeight(),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: theme.colorScheme.outline.withOpacity(0.2),
-        ),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.ads_click,
-              color: theme.colorScheme.primary,
-              size: 32,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = widget.width ?? _getResponsiveWidth(constraints.maxWidth);
+        final height = widget.height ?? _getDefaultHeight();
+        
+        return Container(
+          width: width,
+          height: height,
+          constraints: BoxConstraints(
+            maxWidth: constraints.maxWidth,
+            minHeight: 60,
+          ),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: theme.colorScheme.outline.withOpacity(0.2),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Advertisement',
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                color: theme.colorScheme.onSurface.withOpacity(0.6),
-              ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.ads_click,
+                  color: theme.colorScheme.primary,
+                  size: 32,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Advertisement',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
   Widget _buildPlaceholder() {
     final theme = Theme.of(context);
     
-    return Container(
-      width: widget.width ?? _getDefaultWidth(),
-      height: widget.height ?? _getDefaultHeight(),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: theme.colorScheme.outline.withOpacity(0.1),
-          style: BorderStyle.solid,
-        ),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.ad_units_outlined,
-              color: theme.colorScheme.onSurface.withOpacity(0.3),
-              size: 24,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = widget.width ?? _getResponsiveWidth(constraints.maxWidth);
+        final height = widget.height ?? _getDefaultHeight();
+        
+        return Container(
+          width: width,
+          height: height,
+          constraints: BoxConstraints(
+            maxWidth: constraints.maxWidth,
+            minHeight: 60,
+          ),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceVariant.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: theme.colorScheme.outline.withOpacity(0.1),
+              style: BorderStyle.solid,
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Ad Space',
-              style: GoogleFonts.inter(
-                fontSize: 10,
-                color: theme.colorScheme.onSurface.withOpacity(0.3),
-              ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.ad_units_outlined,
+                  color: theme.colorScheme.onSurface.withOpacity(0.3),
+                  size: 24,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Ad Space',
+                  style: GoogleFonts.inter(
+                    fontSize: 10,
+                    color: theme.colorScheme.onSurface.withOpacity(0.3),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
   Widget _buildLoadingPlaceholder() {
     final theme = Theme.of(context);
     
-    return Container(
-      width: widget.width ?? _getDefaultWidth(),
-      height: widget.height ?? _getDefaultHeight(),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Center(
-        child: SizedBox(
-          width: 20,
-          height: 20,
-          child: CircularProgressIndicator(strokeWidth: 2),
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = widget.width ?? _getResponsiveWidth(constraints.maxWidth);
+        final height = widget.height ?? _getDefaultHeight();
+        
+        return Container(
+          width: width,
+          height: height,
+          constraints: BoxConstraints(
+            maxWidth: constraints.maxWidth,
+            minHeight: 60,
+          ),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceVariant.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Center(
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -174,6 +207,19 @@ class _GoogleAdsWidgetState extends State<GoogleAdsWidget> {
         return 250;
       default:
         return 300;
+    }
+  }
+
+  double _getResponsiveWidth(double maxWidth) {
+    switch (widget.adType) {
+      case 'banner':
+        return maxWidth > 728 ? 728 : maxWidth * 0.9;
+      case 'sidebar':
+        return maxWidth > 300 ? 300 : maxWidth * 0.8;
+      case 'square':
+        return maxWidth > 250 ? 250 : maxWidth * 0.8;
+      default:
+        return maxWidth > 300 ? 300 : maxWidth * 0.8;
     }
   }
 

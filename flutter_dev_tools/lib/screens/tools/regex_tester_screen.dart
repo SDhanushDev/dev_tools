@@ -227,7 +227,7 @@ class _RegexTesterScreenState extends State<RegexTesterScreen> {
               children: [
                 Icon(Icons.error_outline, color: theme.colorScheme.error),
                 const SizedBox(width: 12),
-                Expanded(
+                Flexible(
                   child: Text(
                     _errorMessage!,
                     style: GoogleFonts.inter(

@@ -53,13 +53,13 @@ class ToolLayout extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header
             Container(
               width: double.infinity,
+              margin: const EdgeInsets.all(20),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -96,10 +96,13 @@ class ToolLayout extends StatelessWidget {
               ),
             ),
             
-            const SizedBox(height: 24),
-            
             // Tool Content
-            child,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: child,
+            ),
+            
+            const SizedBox(height: 20),
           ],
         ),
       ),

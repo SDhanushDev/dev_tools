@@ -245,7 +245,7 @@ class _TextCaseConverterScreenState extends State<TextCaseConverterScreen> {
           ),
           
           // Content
-          Expanded(
+          Flexible(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: SelectableText(

@@ -153,10 +153,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+
           // Ad Banner
-          const GoogleAdsWidget(adType: 'banner').animate().fadeIn(duration: 600.ms, delay: 800.ms),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: const GoogleAdsWidget(adType: 'banner').animate().fadeIn(duration: 600.ms, delay: 800.ms),
+            ),
+          ),
           
-          const SizedBox(height: 24),
+          SliverToBoxAdapter(
+            child: const SizedBox(height: 24),
+          ),
 
           // Categories Section (only show when not searching)
           if (_searchQuery.isEmpty && _selectedCategory == null)
@@ -363,7 +371,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () {
-                      // Scroll to top to show all tools
                       setState(() {
                         _selectedCategory = null;
                         _searchQuery = '';
@@ -383,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         const Text('Explore All Tools'),
                         const SizedBox(width: 8),
-                        Icon(Icons.arrow_forward, size: 20),
+                        const Icon(Icons.arrow_forward, size: 20),
                       ],
                     ),
                   ),

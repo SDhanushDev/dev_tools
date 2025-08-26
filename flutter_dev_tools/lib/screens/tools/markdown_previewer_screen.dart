@@ -80,6 +80,7 @@ void main() {
           final isWide = constraints.maxWidth > 800;
           
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Action Buttons
               Row(
@@ -105,7 +106,8 @@ void main() {
               const SizedBox(height: 20),
               
               // Editor and Preview
-              Expanded(
+              SizedBox(
+                height: isWide ? 500 : 620,
                 child: isWide
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,9 +119,15 @@ void main() {
                       )
                     : Column(
                         children: [
-                          Expanded(child: _buildEditor(theme)),
+                          SizedBox(
+                            height: 300,
+                            child: _buildEditor(theme),
+                          ),
                           const SizedBox(height: 20),
-                          Expanded(child: _buildPreview(theme)),
+                          SizedBox(
+                            height: 300,
+                            child: _buildPreview(theme),
+                          ),
                         ],
                       ),
               ),
@@ -137,7 +145,7 @@ void main() {
         Text(
           'Markdown Editor',
           style: GoogleFonts.inter(
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
             color: theme.colorScheme.onSurface,
           ),
@@ -146,20 +154,21 @@ void main() {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: theme.colorScheme.outline.withOpacity(0.3),
-              ),
+              border: Border.all(color: theme.colorScheme.outline),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: TextField(
               controller: _markdownController,
               onChanged: (_) => setState(() {}),
               maxLines: null,
               expands: true,
-              style: GoogleFonts.firaCode(fontSize: 14),
+              style: GoogleFonts.jetBrainsMono(
+                fontSize: 14,
+                color: theme.colorScheme.onSurface,
+              ),
               decoration: InputDecoration(
                 hintText: 'Enter your markdown here...',
-                hintStyle: GoogleFonts.firaCode(
+                hintStyle: GoogleFonts.jetBrainsMono(
                   color: theme.colorScheme.onSurface.withOpacity(0.5),
                 ),
                 border: InputBorder.none,
@@ -204,49 +213,34 @@ void main() {
                       ),
                     ),
                   )
-                : Markdown(
-                    data: _markdownController.text,
-                    selectable: true,
-                    styleSheet: MarkdownStyleSheet(
-                      h1: GoogleFonts.inter(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onSurface,
-                      ),
-                      h2: GoogleFonts.inter(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onSurface,
-                      ),
-                      h3: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onSurface,
-                      ),
-                      p: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: theme.colorScheme.onSurface,
-                        height: 1.5,
-                      ),
-                      code: GoogleFonts.firaCode(
-                        fontSize: 13,
-                        backgroundColor: theme.colorScheme.surfaceVariant.withOpacity(0.5),
-                      ),
-                      codeblockDecoration: BoxDecoration(
-                        color: theme.colorScheme.surfaceVariant.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      blockquote: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: theme.colorScheme.onSurface.withOpacity(0.8),
-                        fontStyle: FontStyle.italic,
-                      ),
-                      blockquoteDecoration: BoxDecoration(
-                        border: Border(
-                          left: BorderSide(
-                            color: theme.colorScheme.primary,
-                            width: 4,
-                          ),
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: MarkdownBody(
+                      data: _markdownController.text,
+                      selectable: true,
+                      styleSheet: MarkdownStyleSheet(
+                        h1: GoogleFonts.inter(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                        h2: GoogleFonts.inter(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                        p: GoogleFonts.inter(
+                          fontSize: 16,
+                          color: theme.colorScheme.onSurface,
+                          height: 1.5,
+                        ),
+                        code: GoogleFonts.firaCode(
+                          fontSize: 14,
+                          backgroundColor: theme.colorScheme.surfaceVariant,
+                        ),
+                        codeblockDecoration: BoxDecoration(
+                          color: theme.colorScheme.surfaceVariant,
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     ),

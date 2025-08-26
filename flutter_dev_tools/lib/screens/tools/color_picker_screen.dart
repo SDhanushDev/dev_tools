@@ -120,20 +120,36 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               const SizedBox(height: 20),
               
               // Color Picker Widget
-              ColorPicker(
-                pickerColor: _currentColor,
-                onColorChanged: (color) {
-                  setState(() {
-                    _currentColor = color;
-                  });
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  // Calculate responsive width with more aggressive padding
+                  final availableWidth = constraints.maxWidth - 80; // More padding for safety
+                  final pickerWidth = (availableWidth > 280 ? 280 : availableWidth.clamp(200.0, 280.0)).toDouble();
+                  
+                  return ClipRect(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: availableWidth,
+                        maxHeight: 300,
+                      ),
+                      child: ColorPicker(
+                        pickerColor: _currentColor,
+                        onColorChanged: (color) {
+                          setState(() {
+                            _currentColor = color;
+                          });
+                        },
+                        colorPickerWidth: pickerWidth,
+                        pickerAreaHeightPercent: 0.6,
+                        enableAlpha: true,
+                        displayThumbColor: true,
+                        paletteType: PaletteType.hsl,
+                        labelTypes: const [],
+                        pickerAreaBorderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  );
                 },
-                colorPickerWidth: 300,
-                pickerAreaHeightPercent: 0.7,
-                enableAlpha: true,
-                displayThumbColor: true,
-                paletteType: PaletteType.hsl,
-                labelTypes: const [],
-                pickerAreaBorderRadius: BorderRadius.circular(8),
               ),
               
               const SizedBox(height: 20),

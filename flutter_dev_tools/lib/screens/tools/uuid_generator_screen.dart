@@ -91,7 +91,7 @@ class _UuidGeneratorScreenState extends State<UuidGeneratorScreen> {
                 // Version Selection
                 Row(
                   children: [
-                    Expanded(
+                    Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -128,7 +128,7 @@ class _UuidGeneratorScreenState extends State<UuidGeneratorScreen> {
                       ),
                     ),
                     const SizedBox(width: 20),
-                    Expanded(
+                    Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -142,7 +142,7 @@ class _UuidGeneratorScreenState extends State<UuidGeneratorScreen> {
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                              Expanded(
+                              Flexible(
                                 child: Slider(
                                   value: _count.toDouble(),
                                   min: 1,

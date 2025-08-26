@@ -134,7 +134,7 @@ class _EpochConverterScreenState extends State<EpochConverterScreen> {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    Expanded(
+                    Flexible(
                       child: _buildInfoCard(
                         'Epoch (seconds)',
                         (_currentDateTime.millisecondsSinceEpoch ~/ 1000).toString(),
@@ -142,7 +142,7 @@ class _EpochConverterScreenState extends State<EpochConverterScreen> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
+                    Flexible(
                       child: _buildInfoCard(
                         'Epoch (milliseconds)',
                         _currentDateTime.millisecondsSinceEpoch.toString(),
@@ -220,9 +220,9 @@ class _EpochConverterScreenState extends State<EpochConverterScreen> {
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: _buildEpochInput(theme)),
+                        Flexible(child: _buildEpochInput(theme)),
                         const SizedBox(width: 20),
-                        Expanded(child: _buildDateInput(theme)),
+                        Flexible(child: _buildDateInput(theme)),
                       ],
                     )
                   : Column(
